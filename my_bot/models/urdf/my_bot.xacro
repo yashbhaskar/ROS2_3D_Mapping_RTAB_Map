@@ -1,0 +1,316 @@
+<?xml version="1.0" ?>
+<robot name="my_bot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<!-- >>>>>>>>>>>>>>>>>>>>>>>>>>>  COLOUR  <<<<<<<<<<<<<<<<<<<<<<<<<<<<< -->
+
+<material name="Dark Orange">
+    <color rgba="0.8 0.4 0.0 1"/>
+</material>
+
+<material name="Black">
+    <color rgba="0 0 0 1"/>
+</material>
+
+<material name="Soft Gold">
+    <color rgba="0.85 0.65 0.13 1"/>
+</material>
+
+<material name="Blue">
+    <color rgba="0.4 0.7 0.9 1"/>
+</material>
+
+<!-- >>>>>>>>>>>>>>>>>>>>>>>>>>>  LINK  <<<<<<<<<<<<<<<<<<<<<<<<<<<<< -->
+
+<link name="base_footprint"/>
+
+<link name="base_link">
+  <inertial>
+    <origin xyz="0.0756055 0.0105518 0.12327" rpy="0 0 0"/>
+    <mass value="22.0632"/>
+    <inertia ixx="0.640947" ixy="0.00023198" ixz="-0.00452525" iyy="0.831169" iyz="-0.000895426" izz="0.862058"/>
+  </inertial>
+  <visual>
+    <origin xyz="0.101903 0.0114713 -0.038956" rpy="7.20565e-09 1.79713e-08 -5.12515e-08"/>
+    <geometry>
+      <mesh filename="file://$(find my_bot)/models/meshes/base_plate.stl"/>
+    </geometry>
+    <material name="Dark Orange"/>
+  </visual>
+  <collision>
+    <origin xyz="0.101903 0.0114713 -0.038956" rpy="7.20565e-09 1.79713e-08 -5.12515e-08"/>
+    <geometry>
+      <mesh filename="file://$(find my_bot)/models/meshes/base_plate.stl"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="left_wheel">
+  <inertial>
+    <origin xyz="6.16316e-06 5.45884e-05 -0.0540036" rpy="0 0 0"/>
+    <mass value="0.467537"/>
+    <inertia ixx="0.000648297" ixy="1.31639e-07" ixz="3.37033e-08" iyy="0.000649448" iyz="2.98517e-07" izz="0.00123559"/>
+  </inertial>
+  <visual>
+    <origin xyz="0.365932 -0.19763 -0.067" rpy="-8.27181e-25 9.95924e-24 6.81701e-25"/>
+    <geometry>
+      <mesh filename="file://$(find my_bot)/models/meshes/left_wheel.stl"/>
+    </geometry>
+    <material name="Black"/>
+  </visual>
+  <collision>
+    <origin xyz="0.365932 -0.19763 -0.067" rpy="-8.27181e-25 9.95924e-24 6.81701e-25"/>
+    <geometry>
+      <mesh filename="file://$(find my_bot)/models/meshes/left_wheel.stl"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="right_wheel">
+  <inertial>
+    <origin xyz="6.16316e-06 5.45884e-05 -0.0540036" rpy="0 0 0"/>
+    <mass value="0.467537"/>
+    <inertia ixx="0.000648297" ixy="1.31639e-07" ixz="3.37033e-08" iyy="0.000649448" iyz="2.98517e-07" izz="0.00123559"/>
+  </inertial>
+  <visual>
+    <origin xyz="0.365932 -0.0456296 -0.067" rpy="0 -4.56045e-24 -8.6624e-26"/>
+    <geometry>
+      <mesh filename="file://$(find my_bot)/models/meshes/right_wheel.stl"/>
+    </geometry>
+    <material name="Black"/>
+  </visual>
+  <collision>
+    <origin xyz="0.365932 -0.0456296 -0.067" rpy="0 -4.56045e-24 -8.6624e-26"/>
+    <geometry>
+      <mesh filename="file://$(find my_bot)/models/meshes/right_wheel.stl"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="lidar">
+  <inertial>
+    <origin xyz="8.38248e-05 0.000100181 -0.0159059" rpy="0 0 0"/>
+    <mass value="0.0390588"/>
+    <inertia ixx="1.75596e-05" ixy="4.82447e-08" ixz="2.24081e-08" iyy="1.75769e-05" iyz="2.67805e-08" izz="3.06455e-05"/>
+  </inertial>
+  <visual>
+    <origin xyz="0 1.73472e-18 0.33" rpy="-3.14159 6.81701e-25 -3.9508e-33"/>
+    <geometry>
+      <mesh filename="file://$(find my_bot)/models/meshes/lidar.stl"/>
+    </geometry>
+    <material name="Blue"/>
+  </visual>
+  <collision>
+    <origin xyz="0 1.73472e-18 0.33" rpy="-3.14159 6.81701e-25 -3.9508e-33"/>
+    <geometry>
+      <mesh filename="file://$(find my_bot)/models/meshes/lidar.stl"/>
+    </geometry>
+  </collision>
+</link>
+
+<!-- >>>>>>>>>>>>>>>>>>>>>>>>>>>  JOINTS  <<<<<<<<<<<<<<<<<<<<<<<<<<<<< -->
+
+<joint name="left" type="continuous">
+  <origin xyz="0.101903 0.193571 -0.017918" rpy="1.5708 1.79713e-08 -5.12515e-08"/>
+  <parent link="base_link"/>
+  <child link="left_wheel"/>
+  <axis xyz="0 0 -1"/>
+</joint>
+
+<joint name="right" type="continuous">
+  <origin xyz="0.101903 -0.170329 -0.017918" rpy="-1.5708 1.52913e-08 -5.12515e-08"/>
+  <parent link="base_link"/>
+  <child link="right_wheel"/>
+  <axis xyz="0 0 1"/>
+</joint>
+
+<joint name="lidar_joint" type="fixed">
+  <origin xyz="0.101903 0.0114713 0.291044" rpy="-3.14159 1.79713e-08 3.83496e-17"/>
+  <parent link="base_link"/>
+  <child link="lidar"/>
+  <axis xyz="0 0 1"/>
+  <limit effort="10" velocity="10" lower="-3.141592653589793" upper="3.141592653589793"/>
+</joint>
+
+<joint name="base_footprint_joint" type="fixed">
+  <origin xyz="0 0 0.1" rpy="0 0 0"/>
+  <parent link="base_footprint"/>
+  <child link="base_link"/>
+</joint>
+
+<!-- >>>>>>>>>>>>>>>>>>>>>>>>>>>  FRICTION  <<<<<<<<<<<<<<<<<<<<<<<<<<<<< -->
+
+<!-- <gazebo reference="base_link">
+  <mu1>0.2</mu1>
+  <mu2>0.2</mu2>
+  <self_collide>false</self_collide>
+</gazebo>
+
+<gazebo reference="left_wheel">
+  <mu1>1.0</mu1>
+  <mu2>1.0</mu2>
+  <self_collide>false</self_collide>
+</gazebo>
+
+<gazebo reference="right_wheel">
+  <mu1>1.0</mu1>
+  <mu2>1.0</mu2>
+  <self_collide>false</self_collide>
+</gazebo> -->
+
+<!-- >>>>>>>>>>>>>>>>>>>>>>>>>>>  PLUGIN  <<<<<<<<<<<<<<<<<<<<<<<<<<<<< -->
+
+<gazebo>
+
+  <plugin filename="libignition-gazebo-joint-state-publisher-system.so" name="ignition::gazebo::systems::JointStatePublisher">
+    <topic>/joint_states</topic>
+  </plugin>
+
+  <plugin
+    filename="libignition-gazebo-sensors-system.so"
+    name="ignition::gazebo::systems::Sensors">
+    <render_engine>ogre2</render_engine>
+  </plugin>
+
+  <plugin
+      filename="libignition-gazebo-diff-drive-system.so"
+      name="ignition::gazebo::systems::DiffDrive">
+      <left_joint>left</left_joint>
+      <right_joint>right</right_joint>
+      <wheel_separation>0.4389</wheel_separation>
+      <wheel_diameter>0.15</wheel_diameter>
+      <odom_topic>odom</odom_topic>
+      <odom_publish_frequency>1</odom_publish_frequency>
+      <topic>cmd_vel</topic>
+  </plugin>
+
+  <plugin filename="ignition-gazebo-odometry-publisher-system" name="ignition::gazebo::systems::OdometryPublisher">
+    <odom_frame>odom</odom_frame>
+    <robot_base_frame>base_footprint</robot_base_frame>
+    <topic>/odom</topic>
+    <left_joint>left</left_joint>
+    <right_joint>right</right_joint>
+    <wheel_separation>0.473</wheel_separation>
+    <wheel_radius>0.075</wheel_radius>
+    <publish_tf>true</publish_tf>
+    <odom_publish_frequency>60</odom_publish_frequency>
+    <tf_topic>/tf</tf_topic>
+    <publish_rate>30</publish_rate>
+  </plugin>
+
+  <plugin filename="libignition-gazebo-imu-system.so"
+          name="ignition::gazebo::systems::Imu">
+  </plugin>
+
+</gazebo>
+
+<!-- >>>>>>>>>>>>>>>>>>>>>>>>>>>  SENSOR  <<<<<<<<<<<<<<<<<<<<<<<<<<<<< -->
+
+<!-- Camera sensor -->
+<gazebo reference="lidar">
+<sensor name="depth_camera" type="rgbd_camera">
+    <!-- <pose>0 0 0.25 0 0 0</pose> -->
+        <always_on>true</always_on>
+        <visualize>true</visualize>
+        <update_rate>5.0</update_rate>
+        <topic>depth_camera</topic>
+        <gz_frame_id>camera</gz_frame_id>
+        <camera>
+          <horizontal_fov>1.047198</horizontal_fov>
+          <image>
+            <width>640</width>
+            <height>480</height>
+          </image>
+          <clip>
+            <near>0.05</near>
+            <far>3</far>
+          </clip>
+        </camera>
+        <baseline>0.2</baseline>
+        <pointCloudCutoff>0.5</pointCloudCutoff>
+        <pointCloudCutoffMax>3.0</pointCloudCutoffMax>
+        <distortionK1>0</distortionK1>
+        <distortionK2>0</distortionK2>
+        <distortionK3>0</distortionK3>
+        <distortionT1>0</distortionT1>
+        <distortionT2>0</distortionT2>
+        <CxPrime>0</CxPrime>
+        <Cx>0</Cx>
+        <Cy>0</Cy>
+        <focalLength>0</focalLength>
+        <hackBaseline>0</hackBaseline>
+      </sensor>
+</gazebo>
+
+<!-- 2D Lidar sensor -->
+<gazebo reference="lidar">
+  <sensor name="gpu_lidar" type="gpu_lidar">
+  <pose relative_to='lidar'>0 0 0 0 0 0</pose>
+  <ignition_frame_id>lidar</ignition_frame_id>
+    <topic>/scan</topic>
+    <update_rate>30</update_rate>
+    <ray>
+      <scan>
+        <horizontal>
+          <samples>360</samples>
+          <resolution>1</resolution>
+          <min_angle>-3.14</min_angle>
+          <max_angle>3.14</max_angle>
+        </horizontal>
+      </scan>
+      <range>
+        <min>0.2</min>
+        <max>10.0</max>
+        <resolution>0.01</resolution>
+      </range>
+    </ray>
+    <always_on>1</always_on>
+    <visualize>true</visualize>
+  </sensor>
+</gazebo>
+
+<!-- IMU sensor -->
+<gazebo reference="base_link">
+  <sensor name="imu_sensor" type="imu">
+      <always_on>true</always_on>
+      <ignition_frame_id>base_link</ignition_frame_id>
+      <frame_id>base_link</frame_id>
+      <update_rate>20</update_rate>
+      <visualize>true</visualize>
+      <topic>imu</topic>
+  </sensor>
+</gazebo>
+
+<!-- 3D lidar sensor -->
+<gazebo reference="lidar">
+      <sensor name="lidar_sensor" type="gpu_ray">
+        <pose>0 0 0.0 0 0 0</pose>
+        <update_rate>20</update_rate>
+        <visualize>true</visualize>
+        <ignition_frame_id>lidar</ignition_frame_id>
+        <topic>/lidar</topic>
+        <ray>
+          <scan>
+            <horizontal>
+              <samples>360</samples>
+              <min_angle>-3.14</min_angle>
+              <max_angle>3.14</max_angle>
+            </horizontal>
+            <vertical>
+              <samples>16</samples>
+              <min_angle>-0.4618</min_angle> <!-- -15 deg -->
+              <max_angle>0.0900</max_angle>  <!-- +15 deg -->
+            </vertical>
+          </scan>
+          <range>
+            <min>0.2</min>
+            <max>30.0</max>
+            <resolution>0.01</resolution>
+          </range>
+        </ray>
+        <always_on>1</always_on>
+        <visualize>true</visualize>
+
+      </sensor>
+</gazebo>
+
+</robot>

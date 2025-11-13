@@ -1,0 +1,251 @@
+<?xml version="1.0" ?>
+<sdf version='1.9'>
+<world name='maze'>
+    <physics name='1ms' type='ignored'>
+        <max_step_size>0.001</max_step_size>
+        <real_time_factor>1</real_time_factor>
+        <real_time_update_rate>1000</real_time_update_rate>
+    </physics>
+
+    <plugin name='gz::sim::systems::Physics' filename='libgz-sim-physics-system.so'/>
+    <plugin name='gz::sim::systems::UserCommands' filename='libgz-sim-user-commands-system.so'/>
+    <plugin name='gz::sim::systems::SceneBroadcaster' filename='libgz-sim-scene-broadcaster-system.so'/>
+
+    <gravity>0 0 -9.8</gravity>
+    <magnetic_field>6e-06 2.3e-05 -4.2e-05</magnetic_field>
+    <atmosphere type='adiabatic'/>
+
+    <scene>
+      <ambient>0.4 0.4 0.4 1</ambient>
+      <background>0.7 0.7 0.7 1</background>
+      <shadows>true</shadows>
+    </scene>
+
+    <model name='ground_plane'>
+      <static>true</static>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>1 1</size>
+            </plane>
+          </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>150 150</size>
+            </plane>
+          </geometry>
+          <material>
+            <ambient>0.8 0.8 0.8 1</ambient>
+            <diffuse>0.8 0.8 0.8 1</diffuse>
+            <specular>0.8 0.8 0.8 1</specular>
+          </material>
+        </visual>
+        <pose>0 0 0 0 0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 0 0</pose>
+          <mass>1</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <enable_wind>false</enable_wind>
+      </link>
+      <pose>0 0 0 0 0 0</pose>
+      <self_collide>false</self_collide>
+    </model>
+
+    <light name='sun' type='directional'>
+      <pose>0 0 10 0 0 0</pose>
+      <cast_shadows>true</cast_shadows>
+      <intensity>1</intensity>
+      <direction>-0.5 0.1 -0.9</direction>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <attenuation>
+        <range>1000</range>
+        <linear>0.01</linear>
+        <constant>0.90000000000000002</constant>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <spot>
+        <inner_angle>0</inner_angle>
+        <outer_angle>0</outer_angle>
+        <falloff>0</falloff>
+      </spot>
+    </light>
+
+    <!-- Boundary walls to enclose the maze (7.2m x 7.2m, centered at 0 0 0) -->
+    <!-- North wall (original y = 6.0 -> y = 2.4) -->
+    <include>
+        <name>boundary_north_0</name>
+        <pose>-3.6 2.4 0.0 0.0 0.0 0.0</pose>
+        <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/NIST maze wall 120</uri>
+    </include>
+    <include>
+        <name>boundary_north_1</name>
+        <pose>-2.4 2.4 0.0 0.0 0.0 0.0</pose>
+        <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/NIST maze wall 120</uri>
+    </include>
+    <include>
+        <name>boundary_north_2</name>
+        <pose>-1.2 2.4 0.0 0.0 0.0 0.0</pose>
+        <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/NIST maze wall 120</uri>
+    </include>
+    <include>
+        <name>boundary_north_3</name>
+        <pose>0.0 2.4 0.0 0.0 0.0 0.0</pose>
+        <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/NIST maze wall 120</uri>
+    </include>
+    <include>
+        <name>boundary_north_4</name>
+        <pose>1.2 2.4 0.0 0.0 0.0 0.0</pose>
+        <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/NIST maze wall 120</uri>
+    </include>
+    <include>
+        <name>boundary_north_5</name>
+        <pose>2.4 2.4 0.0 0.0 0.0 0.0</pose>
+        <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/NIST maze wall 120</uri>
+    </include>
+
+    <!-- South wall (original y = 0.0 -> y = -3.6) -->
+    <include>
+        <name>boundary_south_0</name>
+        <pose>-3.6 -3.6 0.0 0.0 0.0 0.0</pose>
+        <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/NIST maze wall 120</uri>
+    </include>
+    <include>
+        <name>boundary_south_1</name>
+        <pose>-2.4 -3.6 0.0 0.0 0.0 0.0</pose>
+        <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/NIST maze wall 120</uri>
+    </include>
+    <include>
+        <name>boundary_south_2</name>
+        <pose>-1.2 -3.6 0.0 0.0 0.0 0.0</pose>
+        <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/NIST maze wall 120</uri>
+    </include>
+    <include>
+        <name>boundary_south_3</name>
+        <pose>0.0 -3.6 0.0 0.0 0.0 0.0</pose>
+        <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/NIST maze wall 120</uri>
+    </include>
+    <include>
+        <name>boundary_south_4</name>
+        <pose>1.2 -3.6 0.0 0.0 0.0 0.0</pose>
+        <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/NIST maze wall 120</uri>
+    </include>
+    <include>
+        <name>boundary_south_5</name>
+        <pose>2.4 -3.6 0.0 0.0 0.0 0.0</pose>
+        <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/NIST maze wall 120</uri>
+    </include>
+
+    <!-- East wall (original x = 7.2 -> x = 3.6) -->
+    <include>
+        <name>boundary_east_0</name>
+        <pose>3.6 -2.4 0.0 0.0 0.0 1.57</pose>
+        <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/NIST maze wall 120</uri>
+    </include>
+    <include>
+        <name>boundary_east_1</name>
+        <pose>3.6 -1.2 0.0 0.0 0.0 1.57</pose>
+        <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/NIST maze wall 120</uri>
+    </include>
+    <include>
+        <name>boundary_east_2</name>
+        <pose>3.6 0.0 0.0 0.0 0.0 1.57</pose>
+        <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/NIST maze wall 120</uri>
+    </include>
+    <include>
+        <name>boundary_east_3</name>
+        <pose>3.6 1.2 0.0 0.0 0.0 1.57</pose>
+        <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/NIST maze wall 120</uri>
+    </include>
+    <include>
+        <name>boundary_east_4</name>
+        <pose>3.6 2.4 0.0 0.0 0.0 1.57</pose>
+        <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/NIST maze wall 120</uri>
+    </include>
+
+    <!-- West wall (original x = 0.0 -> x = -3.6) -->
+    <include>
+        <name>boundary_west_0</name>
+        <pose>-3.6 -2.4 0.0 0.0 0.0 1.57</pose>
+        <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/NIST maze wall 120</uri>
+    </include>
+    <include>
+        <name>boundary_west_1</name>
+        <pose>-3.6 -1.2 0.0 0.0 0.0 1.57</pose>
+        <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/NIST maze wall 120</uri>
+    </include>
+    <include>
+        <name>boundary_west_2</name>
+        <pose>-3.6 0.0 0.0 0.0 0.0 1.57</pose>
+        <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/NIST maze wall 120</uri>
+    </include>
+    <include>
+        <name>boundary_west_3</name>
+        <pose>-3.6 1.2 0.0 0.0 0.0 1.57</pose>
+        <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/NIST maze wall 120</uri>
+    </include>
+    <include>
+        <name>boundary_west_4</name>
+        <pose>-3.6 2.4 0.0 0.0 0.0 1.57</pose>
+        <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/NIST maze wall 120</uri>
+    </include>
+
+    <!-- Internal walls for maze paths -->
+    <include>
+        <name>internal_0</name>
+        <pose>-2.4 -1.2 0.0 0.0 0.0 0.0</pose>
+        <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/NIST maze wall 120</uri>
+    </include>
+    <include>
+        <name>internal_1</name>
+        <pose>-1.2 -2.4 0.0 0.0 0.0 1.57</pose>
+        <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/NIST maze wall 120</uri>
+    </include>
+    <include>
+        <name>internal_2</name>
+        <pose>-1.2 0.0 0.0 0.0 0.0 1.57</pose>
+        <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/NIST maze wall 120</uri>
+    </include>
+    <include>
+        <name>internal_3</name>
+        <pose>0.0 -1.2 0.0 0.0 0.0 0.0</pose>
+        <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/NIST maze wall 120</uri>
+    </include>
+    <include>
+        <name>internal_4</name>
+        <pose>1.2 -2.4 0.0 0.0 0.0 1.57</pose>
+        <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/NIST maze wall 120</uri>
+    </include>
+    <include>
+        <name>internal_5</name>
+        <pose>1.2 0.0 0.0 0.0 0.0 0.0</pose>
+        <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/NIST maze wall 120</uri>
+    </include>
+    <include>
+        <name>internal_6</name>
+        <pose>2.4 -1.2 0.0 0.0 0.0 1.57</pose>
+        <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/NIST maze wall 120</uri>
+    </include>
+
+</world>
+</sdf>
